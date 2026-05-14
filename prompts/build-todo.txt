@@ -1,3 +1,4 @@
-Explore https://demo.playwright.dev/todomvc using playwright-cli.
 
 Generate a single BDD scenario for adding a todo item successfully.
+
+By Exploring https://demo.playwright.dev/todomvc using playwright-cli.
