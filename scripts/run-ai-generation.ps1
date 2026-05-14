@@ -42,10 +42,10 @@ $commitMessage = "AI Generated: $commitMessage"
 git add .
 git diff --cached --quiet
 
-# if ($LASTEXITCODE -ne 0) {
-#   git commit -m $commitMessage
-#   Write-Host "Committed changes:"
-#   Write-Host $commitMessage
-# } else {
-#   Write-Host "No changes to commit"
-# }
+if ($LASTEXITCODE -ne 0) {
+  git commit -m $commitMessage
+  Write-Host "Committed changes:"
+  Write-Host $commitMessage
+} else {
+  Write-Host "No changes to commit"
+}
