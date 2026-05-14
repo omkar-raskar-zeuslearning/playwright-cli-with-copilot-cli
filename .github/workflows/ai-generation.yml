@@ -34,10 +34,6 @@ jobs:
       - name: Install Copilot CLI
         run: npm install -g @github/copilot
 
-      - name: Authenticate Copilot CLI
-        env:
-          GH_TOKEN: ${{ secrets.GH_COPILOT_TOKEN }}
-
       - name: Configure Git Identity
         run: |
           git config user.name "github-actions[bot]"
