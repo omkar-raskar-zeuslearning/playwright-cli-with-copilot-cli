@@ -9,6 +9,7 @@ test-results/
 
 # Generated Features
 .features-gen/
+.playwright-mcp
 
 # Screenshots / Videos / Traces
 screenshots/

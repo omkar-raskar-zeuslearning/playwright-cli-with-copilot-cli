@@ -31,6 +31,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
 
+      - name: Install Copilot CLI
+        run: npm install -g @github/copilot
+
       - name: Configure Git Identity
         run: |
           git config user.name "github-actions[bot]"

@@ -11,28 +11,29 @@
 
 # Your job when asked to generate tests for a URL
 
-## Phase 1 — Explore with playwright-cli
+## Phase 1 — Explore with Playwright MCP
 
-1. Open the URL using:
-   `playwright-cli open <url>`
+1. Use MCP tools to interact with the browser:
+   - Launch browser and navigate to URL
+   - Inspect page structure and elements
+   - Capture screenshots for reference
 
-2. Take a snapshot:
-   `playwright-cli snapshot`
+2. Identify all interactive elements:
+   - forms and inputs
+   - buttons and links
+   - navigation components
 
-3. Read the YAML snapshot file to understand page structure
+3. Document stable selectors:
+   - ARIA roles and labels
+   - data-testid attributes
+   - semantic HTML elements
+   - text content
 
-4. Navigate through all key flows:
-   - forms
-   - buttons
-   - nav links
-
-5. Take screenshots after major interactions
-
-6. Note:
-   - interactive elements
-   - refs
-   - labels
-   - ARIA roles
+4. Test key user flows:
+   - Form submissions
+   - Navigation paths
+   - State changes
+   - Error scenarios
 
 ---
 

@@ -1,21 +1,12 @@
-Write-Host "STEP 1 - Install Copilot CLI"
-npm install -g @github/copilot
-
-Write-Host "STEP 2 - Install Playwright CLI"
-npm install -g playwright-cli
-
-Write-Host "STEP 3 - Verify Copilot CLI"
-copilot --version
-
-Write-Host "STEP 4 - Configure Model"
+Write-Host "STEP 1 - Configure Model"
 $model = "gpt-4.1"
 Write-Host "Using model: $model"
 
-Write-Host "STEP 5 - Add MCP Server"
+Write-Host "STEP 2 - Add MCP Server"
 copilot mcp add playwright-test --tools "*" -- npx playwright run-test-mcp-server
 Write-Host "MCP server added: playwright-test"
 
-Write-Host "STEP 6 - Run Copilot Agent"
+Write-Host "STEP 3 - Run Copilot Agent"
 $promptFile = "prompts/build-todo.txt"
 $prompt = Get-Content $promptFile -Raw
 
@@ -27,10 +18,10 @@ copilot `
   --output-format text `
   --log-level info
 
-Write-Host "STEP 7 - Git Status"
+Write-Host "STEP 4 - Git Status"
 git status
 
-Write-Host "STEP 8 - Commit Generated Changes"
+Write-Host "STEP 5 - Commit Generated Changes"
 $commitMessage = ($prompt `
   -replace "`r`n", " " `
   -replace "`n", " " `
