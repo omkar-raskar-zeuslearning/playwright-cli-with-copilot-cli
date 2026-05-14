@@ -5,7 +5,7 @@ Write-Host "STEP 2 - Verify Copilot CLI"
 copilot --version
 
 Write-Host "STEP 3 - Configure Model"
-$model = "claude-sonnet-4.5"
+$model = "gpt-4.1"
 Write-Host "Using model: $model"
 
 Write-Host "STEP 4 - Add MCP Server"

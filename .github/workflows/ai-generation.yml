@@ -37,7 +37,6 @@ jobs:
       - name: Authenticate Copilot CLI
         env:
           GH_TOKEN: ${{ secrets.GH_COPILOT_TOKEN }}
-        run: copilot login --github-token $env:GH_TOKEN
 
       - name: Configure Git Identity
         run: |
