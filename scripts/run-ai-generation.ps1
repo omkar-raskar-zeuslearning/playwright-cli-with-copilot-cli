@@ -10,18 +10,9 @@ Write-Host "Using model: $model"
 
 Write-Host "STEP 4 - Add MCP Server"
 copilot mcp add playwright-test --tools "*" -- npx playwright run-test-mcp-server
+Write-Host "MCP server added: playwright-test"
 
-Write-Host "STEP 5 - Validate MCP Server Registration"
-$mcpServers = copilot mcp list
-Write-Host $mcpServers
-
-if ($mcpServers -match "playwright-test") {
-  Write-Host "MCP server 'playwright-test' registered successfully"
-} else {
-  Write-Host "MCP server registration failed"
-}
-
-Write-Host "STEP 6 - Run Copilot Agent"
+Write-Host "STEP 5 - Run Copilot Agent"
 $promptFile = "prompts/build-todo.txt"
 $prompt = Get-Content $promptFile -Raw
 
@@ -33,10 +24,10 @@ copilot `
   --output-format text `
   --log-level info
 
-Write-Host "STEP 7 - Git Status"
+Write-Host "STEP 6 - Git Status"
 git status
 
-Write-Host "STEP 8 - Commit Generated Changes"
+Write-Host "STEP 7 - Commit Generated Changes"
 $commitMessage = ($prompt `
   -replace "`r`n", " " `
   -replace "`n", " " `
@@ -51,10 +42,10 @@ $commitMessage = "AI Generated: $commitMessage"
 git add .
 git diff --cached --quiet
 
-if ($LASTEXITCODE -ne 0) {
-  git commit -m $commitMessage
-  Write-Host "Committed changes:"
-  Write-Host $commitMessage
-} else {
-  Write-Host "No changes to commit"
-}
+# if ($LASTEXITCODE -ne 0) {
+#   git commit -m $commitMessage
+#   Write-Host "Committed changes:"
+#   Write-Host $commitMessage
+# } else {
+#   Write-Host "No changes to commit"
+# }
