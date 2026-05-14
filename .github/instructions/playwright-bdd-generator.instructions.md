@@ -14,7 +14,7 @@
 ## Phase 1 — Explore with playwright-cli
 
 1. Open the URL using:
-   `playwright-cli open <url> --headed`
+   `playwright-cli open <url>`
 
 2. Take a snapshot:
    `playwright-cli snapshot`
