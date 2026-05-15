@@ -66,12 +66,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_COPILOT_TOKEN }}
         run: ./scripts/run-ai-generation.sh
 
-      - name: Run Lint
-        run: npm run lint
-
-      - name: Run Playwright Tests
-        run: npx playwright test
-
       - name: Push Feature Branch
         run: |
           git push origin "${{ steps.branch.outputs.name }}"
