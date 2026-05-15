@@ -4,7 +4,12 @@ set -e
 
 MODEL="gpt-4.1"
 
-BRANCH_NAME=$(copilot \
+if [ -z "$PROMPT" ]; then
+  echo "ERROR: PROMPT variable is not set"
+  exit 1
+fi
+
+RAW_BRANCH_NAME=$(copilot \
   -p "Generate a professional git branch name for this development request.
 
 Development Request:
@@ -28,25 +33,29 @@ todo-delete-scenarios" \
   --model "$MODEL" \
   --allow-tool='shell(git:*)' \
   --no-ask-user \
-  --output-format text \
-  -s <<EOF
-$PROMPT
-EOF
-)
+  --output-format text)
 
-BRANCH_NAME=$(echo "$BRANCH_NAME" \
+BRANCH_NAME=$(echo "$RAW_BRANCH_NAME" \
   | tr '[:upper:]' '[:lower:]' \
   | sed 's/[^a-z0-9-]/-/g' \
   | sed 's/--*/-/g' \
   | sed 's/^-//' \
-  | sed 's/-$//')
+  | sed 's/-$//' \
+  | cut -c1-50)
 
-BRANCH_NAME=$(echo "$BRANCH_NAME" | cut -c1-50)
+if [ -z "$BRANCH_NAME" ]; then
+  echo "ERROR: Failed to generate branch name"
+  exit 1
+fi
 
-BRANCH="ai-generated/$BRANCH_NAME"
+TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
+
+BRANCH="ai-generated/${BRANCH_NAME}-${TIMESTAMP}"
 
 echo "Using branch: $BRANCH"
 
 git checkout -b "$BRANCH"
 
-echo "BRANCH_NAME=$BRANCH" >> "$GITHUB_ENV"
+if [ -n "$GITHUB_ENV" ]; then
+  echo "BRANCH_NAME=$BRANCH" >> "$GITHUB_ENV"
+fi
