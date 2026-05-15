@@ -48,10 +48,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Make Scripts Executable
-        run: |
-          chmod +x .github/scripts/*.sh
-
       - name: Resolve Prompt
         run: |
           ./.github/scripts/resolve-prompt.sh "${{ inputs.prompt }}"
