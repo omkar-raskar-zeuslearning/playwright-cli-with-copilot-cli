@@ -17,16 +17,22 @@ else
   echo "MCP server added: playwright-test"
 fi
 
-echo "STEP 3 - Run Copilot Agent"
+echo "STEP 3 - Resolve Prompt"
 
-PROMPT_FILE="prompts/build-todo.txt"
-
-if [ ! -f "$PROMPT_FILE" ]; then
-  echo "Prompt file not found: $PROMPT_FILE"
-  exit 1
+if [ -n "$PROMPT" ]; then
+  echo "Using PROMPT from GitHub Actions input"
+else
+  PROMPT_FILE="prompts/build-todo.txt"
+  if [ ! -f "$PROMPT_FILE" ]; then
+    echo "Prompt file not found: $PROMPT_FILE"
+    exit 1
+  fi
+  echo "Using PROMPT from file: $PROMPT_FILE"
+  PROMPT=$(cat "$PROMPT_FILE")
 fi
-
-PROMPT=$(cat "$PROMPT_FILE")
+echo ""
+echo "Resolved Prompt:"
+echo "$PROMPT"
 
 copilot \
   --model "$MODEL" \
