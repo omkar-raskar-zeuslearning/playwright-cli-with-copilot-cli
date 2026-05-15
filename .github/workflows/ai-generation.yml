@@ -58,9 +58,6 @@ jobs:
         run: |
           echo "$CUSTOM_PROMPT" > prompts/build-todo.txt
 
-      - name: Make Script Executable
-        run: chmod +x ./scripts/run-ai-generation.sh
-
       - name: Run AI Generation Script
         env:
           GH_TOKEN: ${{ secrets.GH_COPILOT_TOKEN }}
