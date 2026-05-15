@@ -55,7 +55,7 @@ jobs:
       - name: Run AI Generation Script
         env:
           GH_TOKEN: ${{ secrets.GH_COPILOT_TOKEN }}
-        run: ./scripts/run-ai-generation.ps1
+        run: ./scripts/run-ai-generation.sh
 
       - name: Push Feature Branch
         run: git push origin "${{ steps.branch.outputs.name }}"
