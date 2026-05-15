@@ -34,28 +34,14 @@ copilot \
   --prompt "$PROMPT" \
   --allow-all \
   --output-format text \
-  --log-level info
+  --log-level info \
+  --no-ask-user
 
 echo "STEP 4 - Git Status"
 
 git status
 
-echo "STEP 5 - Prepare Commit Message"
-
-COMMIT_MESSAGE=$(echo "$PROMPT" \
-  | tr '\n' ' ' \
-  | sed 's/[^a-zA-Z0-9 ]//g' \
-  | xargs)
-
-COMMIT_MESSAGE=${COMMIT_MESSAGE:0:60}
-COMMIT_MESSAGE="AI Generated: $COMMIT_MESSAGE"
-
-echo ""
-echo "Generated Commit Message:"
-echo "$COMMIT_MESSAGE"
-
-echo ""
-echo "STEP 6 - Stage Changes"
+echo "STEP 5 - Stage Changes"
 
 git add .
 
@@ -65,11 +51,54 @@ if git diff --cached --quiet; then
 fi
 
 echo ""
+echo "STEP 6 - Generate AI Commit Message"
+
+COMMIT_MESSAGE=$(copilot \
+  -p "Generate a professional conventional commit message based on this development request:
+
+$PROMPT
+
+Rules:
+- Return ONLY the commit message
+- No explanations
+- No quotes
+- No markdown
+- No co-author lines
+- No AI references
+- Max 72 characters
+- Use conventional commits format
+
+Examples:
+feat: add playwright todo creation scenario
+fix: resolve flaky login selector
+chore: update github actions workflow" \
+  --model "$MODEL" \
+  --allow-tool='shell(git:*)' \
+  --no-ask-user \
+  --output-format text \
+  -s)
+
+COMMIT_MESSAGE=$(echo "$COMMIT_MESSAGE" \
+  | tr '\n' ' ' \
+  | xargs)
+
+COMMIT_MESSAGE=$(echo "$COMMIT_MESSAGE" \
+  | sed 's/Co-authored-by:.*//')
+
+COMMIT_MESSAGE=${COMMIT_MESSAGE:0:80}
+
+echo ""
+echo "Generated Commit Message:"
+echo "$COMMIT_MESSAGE"
+
+echo ""
 echo "STEP 7 - Review Staged Changes"
 
 git --no-pager diff --cached
 
 echo ""
+echo "STEP 8 - Commit Changes"
+
 git commit -m "$COMMIT_MESSAGE"
 
 echo ""
